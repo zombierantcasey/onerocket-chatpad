@@ -2,3 +2,5 @@
 /.parcel-cache
 /dist
 notes.txt
+replosh.sh
+redeploy.sh
