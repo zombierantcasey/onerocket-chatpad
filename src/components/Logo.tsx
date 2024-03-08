@@ -55,9 +55,9 @@ export function Logo(props: JSX.IntrinsicElements["svg"]) {
 export function LogoIcon(props: React.ImgHTMLAttributes<HTMLImageElement>) {
   return (
     <img
-      src={logoIcon} // Use the imported image as the source
-      alt="Logo Icon" // Provide an appropriate alt text for the logo icon
-      {...props} // Spread any additional props passed to the component
+      src={logoIcon} 
+      alt="Logo Icon" 
+      {...props} 
     />
   );
 }
