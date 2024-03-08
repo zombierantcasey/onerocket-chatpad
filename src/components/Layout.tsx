@@ -95,7 +95,7 @@ export function Layout() {
                 <LogoText
                   style={{
                     height: 22,
-                    color: "#27B882",
+                    color: "#E65100",
                     display: "block",
                   }}
                 />
@@ -226,7 +226,7 @@ export function Layout() {
               <Tooltip label="Source Code">
                 <ActionIcon
                   component="a"
-                  href="https://github.com/deiucanta/chatpad"
+                  href="https://github.com/zombierantcasey/onerocket-chatpad"
                   target="_blank"
                   sx={{ flex: 1 }}
                   size="xl"
@@ -234,40 +234,6 @@ export function Layout() {
                   <IconBrandGithub size={20} />
                 </ActionIcon>
               </Tooltip>
-              {config.showTwitterLink && (
-                <Tooltip label="Follow on Twitter">
-                  <ActionIcon
-                    component="a"
-                    href="https://twitter.com/deiucanta"
-                    target="_blank"
-                    sx={{ flex: 1 }}
-                    size="xl"
-                  >
-                    <IconBrandTwitter size={20} />
-                  </ActionIcon>
-                </Tooltip>
-              )}
-              {config.showFeedbackLink && (
-                <Tooltip label="Give Feedback">
-                  <ActionIcon
-                    component="a"
-                    href="https://feedback.chatpad.ai"
-                    onClick={(event) => {
-                      if (window.todesktop) {
-                        event.preventDefault();
-                        window.todesktop.contents.openUrlInBrowser(
-                          "https://feedback.chatpad.ai"
-                        );
-                      }
-                    }}
-                    target="_blank"
-                    sx={{ flex: 1 }}
-                    size="xl"
-                  >
-                    <IconMessage size={20} />
-                  </ActionIcon>
-                </Tooltip>
-              )}
             </Center>
           </Navbar.Section>
         </Navbar>

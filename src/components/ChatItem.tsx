@@ -55,7 +55,7 @@ export function ChatItem({ chat, isActive }: { chat: Chat, isActive: boolean }) 
       <Link to={`/chats/${chat.id}`} style={{ flex: 1 }}>
         <MainLink
           icon={chat.pinned ? <IconPinned size="1rem" /> : <IconMessages size="1rem" />}
-          color="teal"
+          color="orange"
           chat={chat}
           label={chat.description}
         />
