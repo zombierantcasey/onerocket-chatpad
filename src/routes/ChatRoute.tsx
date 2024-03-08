@@ -80,7 +80,7 @@ export function ChatRoute() {
 
   const submit = async () => {
     if (submitting) return;
-
+  
     if (!chatId) {
       notifications.show({
         title: "Error",
@@ -89,7 +89,7 @@ export function ChatRoute() {
       });
       return;
     }
-
+  
     if (!apiKey) {
       notifications.show({
         title: "Error",
@@ -98,10 +98,9 @@ export function ChatRoute() {
       });
       return;
     }
-
+  
     try {
       setSubmitting(true);
-
       await db.messages.add({
         id: nanoid(),
         chatId,
@@ -110,17 +109,8 @@ export function ChatRoute() {
         createdAt: new Date(),
       });
       setContent("");
-
-      const messageId = nanoid();
-      await db.messages.add({
-        id: messageId,
-        chatId,
-        content: "█",
-        role: "assistant",
-        createdAt: new Date(),
-      });
-
-      await createStreamChatCompletion(
+  
+      const chatCompletionResponse = await createChatCompletion(
         apiKey,
         [
           {
@@ -132,13 +122,22 @@ export function ChatRoute() {
             content: message.content,
           })),
           { role: "user", content },
-        ],
-        chatId,
-        messageId
+        ]
       );
-
-      setSubmitting(false);
-
+  
+      if (chatCompletionResponse.data.choices) {
+        const assistantMessageContent = chatCompletionResponse.data.choices[0].message?.content;
+        if (assistantMessageContent) {
+          await db.messages.add({
+            id: nanoid(),
+            chatId,
+            content: assistantMessageContent,
+            role: "assistant",
+            createdAt: new Date(),
+          });
+        }
+      }
+  
       if (chat?.description === "New Chat") {
         const messages = await db.messages
           .where({ chatId })
@@ -155,20 +154,21 @@ export function ChatRoute() {
           {
             role: "user",
             content:
-              "What would be a short and relevant title for this chat ? You must strictly answer with only the title, no other text is allowed.",
+              "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed.",
           },
         ]);
         const chatDescription =
           createChatDescription.data.choices[0].message?.content;
-
-        if (createChatDescription.data.usage) {
+  
+        // Update the chat description and total tokens used
+        if (createChatDescription && createChatDescription.data.usage) {
           await db.chats.where({ id: chatId }).modify((chat) => {
             chat.description = chatDescription ?? "New Chat";
             if (chat.totalTokens) {
               chat.totalTokens +=
-                createChatDescription.data.usage!.total_tokens;
+                createChatDescription.data.usage.total_tokens;
             } else {
-              chat.totalTokens = createChatDescription.data.usage!.total_tokens;
+              chat.totalTokens = createChatDescription.data.usage.total_tokens;
             }
           });
         }
@@ -180,19 +180,21 @@ export function ChatRoute() {
           color: "red",
           message: "No internet connection.",
         });
-      }
-      const message = error.response?.data?.error?.message;
-      if (message) {
-        notifications.show({
-          title: "Error",
-          color: "red",
-          message,
-        });
+      } else {
+        const message = error.response?.data?.error?.message;
+        if (message) {
+          notifications.show({
+            title: "Error",
+            color: "red",
+            message,
+          });
+        }
       }
     } finally {
       setSubmitting(false);
     }
   };
+  
 
   const onUserMsgToggle = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     const { selectionStart, selectionEnd } = event.currentTarget;
