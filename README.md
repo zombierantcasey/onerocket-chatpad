@@ -1,5 +1,5 @@
 <div align="center">
-  ![OneRocket Logo](src/assets/apple-touch-icon.png)
+  <img src="src/assets/apple-touch-icon.png" alt="OneRocket Logo">
 </div>
 
 # Onerocket-Chatpad
