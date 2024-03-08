@@ -8,7 +8,6 @@ import {
   MediaQuery,
   Select,
   SimpleGrid,
-  Skeleton,
   Stack,
   SegmentedControl,
   Textarea,
@@ -22,9 +21,9 @@ import { MessageItem } from "../components/MessageItem";
 import { db } from "../db";
 import { useChatId } from "../hooks/useChatId";
 import { config } from "../utils/config";
+import { useMantineTheme } from '@mantine/core';
 import {
   createChatCompletion,
-  createStreamChatCompletion,
 } from "../utils/openai";
 
 export function ChatRoute() {
@@ -77,6 +76,45 @@ export function ChatRoute() {
       setModel(settings.openAiModel);
     }
   });
+
+  const ChasingDots = () => {
+    const theme = useMantineTheme(); // Get the current theme
+    const dotColor = theme.colorScheme === 'dark' ? 'white' : 'black'; // Determine dot color based on theme
+  
+    return (
+      <div className="chasing-dots">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <style jsx>{`
+          .chasing-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .dot {
+            width: 8px;
+            height: 8px;
+            margin: 0 4px;
+            background-color: ${dotColor}; // Apply the color based on the theme
+            border-radius: 50%;
+            animation: chaseDot 1.5s infinite linear;
+          }
+          .dot:nth-child(1) {
+            animation-delay: -0.5s;
+          }
+          .dot:nth-child(2) {
+            animation-delay: -0.25s;
+          }
+          @keyframes chaseDot {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(1); }
+          }
+        `}</style>
+      </div>
+    );
+  };  
 
   const submit = async () => {
     if (submitting) return;
@@ -240,11 +278,7 @@ export function ChatRoute() {
         </Stack>
         {submitting && (
           <Card withBorder mt="xs">
-            <Skeleton height={8} radius="xl" />
-            <Skeleton height={8} mt={6} radius="xl" />
-            <Skeleton height={8} mt={6} radius="xl" />
-            <Skeleton height={8} mt={6} radius="xl" />
-            <Skeleton height={8} mt={6} width="70%" radius="xl" />
+            <ChasingDots />
           </Card>
         )}
       </Container>
