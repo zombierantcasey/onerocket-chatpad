@@ -175,6 +175,8 @@ export function ChatRoute() {
           });
         }
       }
+
+      setSubmitting(false); // prevent double loading spinner
   
       if (chat?.description === "New Chat") {
         const messages = await db.messages
@@ -229,7 +231,9 @@ export function ChatRoute() {
         }
       }
     } finally {
-      setSubmitting(false);
+      if (submitting) {
+        setSubmitting(false);
+      }
     }
   };
   
