@@ -2,7 +2,7 @@
   <img src="src/assets/apple-touch-icon.png" alt="OneRocket Logo">
 </div>
 
-# Onerocket-Chatpad
+<h1 align="center">Onerocket-Chatpad</h1>
 
 Fork of [chatpad](https://github.com/deiucanta/chatpad) with built in features to support the Onerocket.ai API. 
 
