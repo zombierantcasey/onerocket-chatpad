@@ -1,5 +1,4 @@
-import logoIcon from '../assets/apple-touch-icon.png';
-
+const logoIcon = require('../assets/apple-touch-icon.png');
 
 export function LogoText(props: JSX.IntrinsicElements["svg"]) {
   return (

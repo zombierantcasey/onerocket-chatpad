@@ -1,4 +1,6 @@
-![OneRocket Logo](onerocketlogoblack.svg)
+<div align="center">
+  ![OneRocket Logo](src/assets/apple-touch-icon.png)
+</div>
 
 # Onerocket-Chatpad
 
