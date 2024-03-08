@@ -199,7 +199,7 @@ export function ChatRoute() {
           createChatDescription.data.choices[0].message?.content;
   
         // Update the chat description and total tokens used
-        if (createChatDescription && createChatDescription.data.usage) {
+        if (createChatDescription.data.usage) {
           await db.chats.where({ id: chatId }).modify((chat) => {
             chat.description = chatDescription ?? "New Chat";
             if (chat.totalTokens) {
