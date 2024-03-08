@@ -15,7 +15,7 @@ import {
 import { notifications } from "@mantine/notifications";
 import { useLiveQuery } from "dexie-react-hooks";
 import { nanoid } from "nanoid";
-import { KeyboardEvent, useState, type ChangeEvent, useEffect } from "react";
+import { KeyboardEvent, useState, useRef, type ChangeEvent, useEffect } from "react";
 import { AiOutlineSend } from "react-icons/ai";
 import { MessageItem } from "../components/MessageItem";
 import { db } from "../db";
@@ -27,6 +27,7 @@ import {
 } from "../utils/openai";
 
 export function ChatRoute() {
+  const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const chatId = useChatId();
   const apiKey = useLiveQuery(async () => {
     return (await db.settings.where({ id: "general" }).first())?.openAiApiKey;
@@ -77,6 +78,7 @@ export function ChatRoute() {
     }
   });
 
+  // loading dots animation in text box
   const ChasingDots = () => {
     const theme = useMantineTheme(); // Get the current theme
     const dotColor = theme.colorScheme === 'dark' ? 'white' : 'black'; // Determine dot color based on theme
@@ -234,6 +236,7 @@ export function ChatRoute() {
       if (submitting) {
         setSubmitting(false);
       }
+      setTimeout(() => messageInputRef.current?.focus(), 0); // select the message input once the message as loaded
     }
   };
   
@@ -402,6 +405,7 @@ export function ChatRoute() {
           )}
           <Flex gap="sm">
             <Textarea
+              ref={messageInputRef}
               key={chatId}
               sx={{ flex: 1 }}
               placeholder="Your message here..."
