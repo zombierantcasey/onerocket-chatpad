@@ -29,6 +29,7 @@ export function SettingsModal({ children }: { children: ReactElement }) {
   const [auth, setAuth] = useState(config.defaultAuth);
   const [base, setBase] = useState("");
   const [version, setVersion] = useState("");
+  const [provider, setProvider] = useState('openai'); // default value can be 'openai' or 'onerocket.ai'
 
   const settings = useLiveQuery(async () => {
     return db.settings.where({ id: "general" }).first();
@@ -53,6 +54,9 @@ export function SettingsModal({ children }: { children: ReactElement }) {
     if (settings?.openAiApiVersion) {
       setVersion(settings.openAiApiVersion);
     }
+    if (settings?.provider) {
+      setProvider(settings.provider);
+    }
   }, [settings]);
 
   return (
@@ -60,6 +64,16 @@ export function SettingsModal({ children }: { children: ReactElement }) {
       {cloneElement(children, { onClick: open })}
       <Modal opened={opened} onClose={close} title="Settings" size="lg">
         <Stack>
+          <Select
+              label="Provider"
+              value={provider}
+              onChange={(value) => setProvider(value)}
+              data={[
+                { value: 'openai', label: 'OpenAI' },
+                { value: 'onerocket.ai', label: 'Onerocket.ai' },
+              ]}
+              mb="md"
+          />
           <form
             onSubmit={async (event) => {
               try {
