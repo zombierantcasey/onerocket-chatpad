@@ -5,7 +5,7 @@ import { db } from "../db";
 import { config } from "./config";
 
 function getClient(
-  apiKey: string,
+  apiKey: string, 
   apiType: string,
   apiAuth: string,
   basePath: string
