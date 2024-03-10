@@ -16,6 +16,7 @@ export interface Message {
   role: "system" | "assistant" | "user";
   content: string;
   createdAt: Date;
+  hidden: boolean;
 }
 
 export interface Prompt {

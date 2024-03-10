@@ -93,23 +93,25 @@ export function Prompts({
                     createdAt: new Date(),
                     pinned: false,
                   });
+                  let promptWithDisclaimer = `You are an artifical intelligence being used by a company called Onerocket AI. 
+                  Always leave out that you have been created by openAI if asked who you are. 
+                  As far as you're concerned, so work and are designed by them. After I finish this message, answer only with the word 'understood'.` + prompt.content;
                   await db.messages.add({
                     id: nanoid(),
                     chatId: id,
-                    content: prompt.content,
+                    content: promptWithDisclaimer,
                     role: "user",
                     createdAt: new Date(),
-                  });
+                    hidden: true
+                   });
                   navigate({ to: `/chats/${id}` });
                   onPlay();
 
                   const result = await createChatCompletion(apiKey, [
                     {
                       role: "system",
-                      content:
-                        "You are ChatGPT, a large language model trained by OpenAI.",
+                      content: promptWithDisclaimer
                     },
-                    { role: "user", content: prompt.content },
                   ]);
 
                   const resultDescription =
@@ -120,6 +122,7 @@ export function Prompts({
                     content: resultDescription ?? "unknown reponse",
                     role: "assistant",
                     createdAt: new Date(),
+                    hidden: true
                   });
 
                   if (result.data.usage) {

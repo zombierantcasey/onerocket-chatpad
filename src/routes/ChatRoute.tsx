@@ -147,6 +147,7 @@ export function ChatRoute() {
         content,
         role: "user",
         createdAt: new Date(),
+        hidden: false
       });
       setContent("");
   
@@ -174,6 +175,7 @@ export function ChatRoute() {
             content: assistantMessageContent,
             role: "assistant",
             createdAt: new Date(),
+            hidden: false
           });
         }
       }
@@ -279,9 +281,9 @@ export function ChatRoute() {
     <>
       <Container pt="xl" pb={100}>
         <Stack spacing="xs">
-          {messages?.map((message) => (
-            <MessageItem key={message.id} message={message} />
-          ))}
+        {messages?.filter(message => !message.hidden).map((message) => (
+          <MessageItem key={message.id} message={message} />
+        ))}
         </Stack>
         {submitting && (
           <Card withBorder mt="xs">
