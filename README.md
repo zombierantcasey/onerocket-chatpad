@@ -8,6 +8,14 @@ Fork of [chatpad](https://github.com/deiucanta/chatpad) with newly built feature
 
 Onerocket is an AI broker/aggregator designed to provide a single path to many LLMs and AI systems. Additionally, it also provides simple one request endpoints to execute more complicated logic. 
 
+Ensure both npm and yarn are installed.
+
+## Yarn build 
+
+```
+yarn build
+```
+
 ## Build docker locally 
 
 ```
