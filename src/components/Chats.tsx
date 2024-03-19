@@ -19,8 +19,14 @@ export function Chats({ search }: { search: string }) {
     [chats, search]
   );
 
-  const pinnedChats = useMemo(() => filteredChats.filter((chat) => chat.pinned), [filteredChats]);
-  const unpinnedChats = useMemo(() => filteredChats.filter((chat) => !chat.pinned), [filteredChats]);
+  const pinnedChats = useMemo(
+    () => filteredChats.filter((chat) => chat.pinned),
+    [filteredChats]
+  );
+  const unpinnedChats = useMemo(
+    () => filteredChats.filter((chat) => !chat.pinned),
+    [filteredChats]
+  );
 
   return (
     <>
@@ -31,7 +37,9 @@ export function Chats({ search }: { search: string }) {
             <ChatItem chat={chat} isActive={chatId === chat.id} />
           ))}
 
-          {unpinnedChats.length > 0 ? <Text p="xs" fz="xs" fw={700} color="gray" children={"Unpinned"} /> : null}
+          {unpinnedChats.length > 0 ? (
+            <Text p="xs" fz="xs" fw={700} color="gray" children={"Unpinned"} />
+          ) : null}
         </>
       ) : null}
 
@@ -39,5 +47,5 @@ export function Chats({ search }: { search: string }) {
         <ChatItem chat={chat} isActive={chatId === chat.id} />
       ))}
     </>
-  )
+  );
 }

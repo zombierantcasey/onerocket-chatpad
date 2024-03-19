@@ -5,7 +5,9 @@ import { db } from "../db";
 
 export function IndexRoute() {
   const navigate = useNavigate();
-  const chats = useLiveQuery(() => db.chats.orderBy("createdAt").reverse().toArray());
+  const chats = useLiveQuery(() =>
+    db.chats.orderBy("createdAt").reverse().toArray()
+  );
 
   useEffect(() => {
     if (chats && chats.length > 0) {
@@ -13,9 +15,5 @@ export function IndexRoute() {
     }
   }, [chats, navigate]);
 
-  return (
-    <div>
-      {}
-    </div>
-  );
+  return <div>{}</div>;
 }

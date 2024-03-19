@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo } from "react";
 import {
   ActionIcon,
   Box,
@@ -10,17 +10,17 @@ import {
   Text,
   ThemeIcon,
   Tooltip,
-} from '@mantine/core';
-import { Prism } from '@mantine/prism';
-import { IconCopy, IconUser } from '@tabler/icons-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { Message } from '../db';
-import '../styles/markdown.scss';
-import { CreatePromptModal } from './CreatePromptModal';
-import { LogoIcon } from './Logo';
-import { ScrollIntoView } from './ScrollIntoView';
-import '../utils/prisma-setup';
+} from "@mantine/core";
+import { Prism } from "@mantine/prism";
+import { IconCopy, IconUser } from "@tabler/icons-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Message } from "../db";
+import "../styles/markdown.scss";
+import { CreatePromptModal } from "./CreatePromptModal";
+import { LogoIcon } from "./Logo";
+import { ScrollIntoView } from "./ScrollIntoView";
+import "../utils/prisma-setup";
 
 export const MessageItem = memo(({ message }: { message: Message }) => {
   const wordCount = useMemo(() => {
@@ -32,12 +32,12 @@ export const MessageItem = memo(({ message }: { message: Message }) => {
     <ScrollIntoView>
       <Card withBorder>
         <Flex gap="sm">
-          {message.role === 'user' && (
+          {message.role === "user" && (
             <ThemeIcon color="gray" size="lg">
               <IconUser size={20} />
             </ThemeIcon>
           )}
-          {message.role === 'assistant' && <LogoIcon style={{ height: 32 }} />}
+          {message.role === "assistant" && <LogoIcon style={{ height: 32 }} />}
           <Box sx={{ flex: 1, width: 0 }} className="markdown">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
@@ -46,25 +46,23 @@ export const MessageItem = memo(({ message }: { message: Message }) => {
                   <Table verticalSpacing="sm" highlightOnHover {...props} />
                 ),
                 code: ({ node, inline, className, ...props }) => {
-                  const languageMatch = /language-(\w+)/.exec(className || '');
-                  const language = languageMatch ? languageMatch[1] : '';
+                  const languageMatch = /language-(\w+)/.exec(className || "");
+                  const language = languageMatch ? languageMatch[1] : "";
                   return inline ? (
                     <Code {...props} />
                   ) : (
                     <Box sx={{ position: "relative" }}>
-                    <Prism
-                      language={language as any}
-                    >
-              {String(props.children)}
-            </Prism>
-          </Box>
+                      <Prism language={language as any}>
+                        {String(props.children)}
+                      </Prism>
+                    </Box>
                   );
                 },
               }}
-          >
+            >
               {message.content}
             </ReactMarkdown>
-            {message.role === 'assistant' && (
+            {message.role === "assistant" && (
               <Box>
                 <Text size="sm" color="dimmed">
                   {wordCount} words
@@ -76,7 +74,7 @@ export const MessageItem = memo(({ message }: { message: Message }) => {
             <CreatePromptModal content={message.content} />
             <CopyButton value={message.content}>
               {({ copied, copy }) => (
-                <Tooltip label={copied ? 'Copied' : 'Copy'} position="left">
+                <Tooltip label={copied ? "Copied" : "Copy"} position="left">
                   <ActionIcon onClick={copy}>
                     <IconCopy opacity={0.5} size={20} />
                   </ActionIcon>
@@ -89,4 +87,3 @@ export const MessageItem = memo(({ message }: { message: Message }) => {
     </ScrollIntoView>
   );
 });
-

@@ -51,19 +51,19 @@ export function App() {
             colorScheme,
             colors: {
               orange: [
-                '#FBE9E7', 
-                '#FFD0B0', 
-                '#FFB180', 
-                '#FF9261', 
-                '#FF743A', 
-                '#E65100', 
-                '#CC4600', 
-                '#B33C00', 
-                '#993200', 
-                '#802900', 
+                "#FBE9E7",
+                "#FFD0B0",
+                "#FFB180",
+                "#FF9261",
+                "#FF743A",
+                "#E65100",
+                "#CC4600",
+                "#B33C00",
+                "#993200",
+                "#802900",
               ],
             },
-            primaryColor: 'orange',
+            primaryColor: "orange",
             globalStyles: (theme) => ({
               body: {
                 backgroundColor:

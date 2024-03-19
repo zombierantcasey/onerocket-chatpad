@@ -15,16 +15,20 @@ import {
 import { notifications } from "@mantine/notifications";
 import { useLiveQuery } from "dexie-react-hooks";
 import { nanoid } from "nanoid";
-import { KeyboardEvent, useState, useRef, type ChangeEvent, useEffect } from "react";
+import {
+  KeyboardEvent,
+  useState,
+  useRef,
+  type ChangeEvent,
+  useEffect,
+} from "react";
 import { AiOutlineSend } from "react-icons/ai";
 import { MessageItem } from "../components/MessageItem";
 import { db } from "../db";
 import { useChatId } from "../hooks/useChatId";
 import { config } from "../utils/config";
-import { useMantineTheme } from '@mantine/core';
-import {
-  createChatCompletion,
-} from "../utils/openai";
+import { useMantineTheme } from "@mantine/core";
+import { createChatCompletion } from "../utils/openai";
 
 export function ChatRoute() {
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -81,8 +85,8 @@ export function ChatRoute() {
   // loading dots animation in text box
   const ChasingDots = () => {
     const theme = useMantineTheme(); // Get the current theme
-    const dotColor = theme.colorScheme === 'dark' ? 'white' : 'black'; // Determine dot color based on theme
-  
+    const dotColor = theme.colorScheme === "dark" ? "white" : "black"; // Determine dot color based on theme
+
     return (
       <div className="chasing-dots">
         <div className="dot"></div>
@@ -109,18 +113,25 @@ export function ChatRoute() {
             animation-delay: -0.25s;
           }
           @keyframes chaseDot {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.5); opacity: 0.7; }
-            100% { transform: scale(1); }
+            0% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.5);
+              opacity: 0.7;
+            }
+            100% {
+              transform: scale(1);
+            }
           }
         `}</style>
       </div>
     );
-  }; 
+  };
 
   const submit = async () => {
     if (submitting) return;
-  
+
     if (!chatId) {
       notifications.show({
         title: "Error",
@@ -129,7 +140,7 @@ export function ChatRoute() {
       });
       return;
     }
-  
+
     if (!apiKey) {
       notifications.show({
         title: "Error",
@@ -138,7 +149,7 @@ export function ChatRoute() {
       });
       return;
     }
-  
+
     try {
       setSubmitting(true);
       await db.messages.add({
@@ -147,27 +158,25 @@ export function ChatRoute() {
         content,
         role: "user",
         createdAt: new Date(),
-        hidden: false
+        hidden: false,
       });
       setContent("");
-  
-      const chatCompletionResponse = await createChatCompletion(
-        apiKey,
-        [
-          {
-            role: "system",
-            content: getSystemMessage(),
-          },
-          ...(messages ?? []).map((message) => ({
-            role: message.role,
-            content: message.content,
-          })),
-          { role: "user", content },
-        ]
-      );
-  
+
+      const chatCompletionResponse = await createChatCompletion(apiKey, [
+        {
+          role: "system",
+          content: getSystemMessage(),
+        },
+        ...(messages ?? []).map((message) => ({
+          role: message.role,
+          content: message.content,
+        })),
+        { role: "user", content },
+      ]);
+
       if (chatCompletionResponse.data.choices) {
-        const assistantMessageContent = chatCompletionResponse.data.choices[0].message?.content;
+        const assistantMessageContent =
+          chatCompletionResponse.data.choices[0].message?.content;
         if (assistantMessageContent) {
           await db.messages.add({
             id: nanoid(),
@@ -175,13 +184,13 @@ export function ChatRoute() {
             content: assistantMessageContent,
             role: "assistant",
             createdAt: new Date(),
-            hidden: false
+            hidden: false,
           });
         }
       }
 
       setSubmitting(false); // prevent double loading spinner
-  
+
       if (chat?.description === "New Chat") {
         const messages = await db.messages
           .where({ chatId })
@@ -203,14 +212,13 @@ export function ChatRoute() {
         ]);
         const chatDescription =
           createChatDescription.data.choices[0].message?.content;
-  
+
         // Update the chat description and total tokens used
         if (createChatDescription.data.usage) {
           await db.chats.where({ id: chatId }).modify((chat) => {
             chat.description = chatDescription ?? "New Chat";
             if (chat.totalTokens) {
-              chat.totalTokens +=
-                createChatDescription.data.usage.total_tokens;
+              chat.totalTokens += createChatDescription.data.usage.total_tokens;
             } else {
               chat.totalTokens = createChatDescription.data.usage.total_tokens;
             }
@@ -241,7 +249,6 @@ export function ChatRoute() {
       setTimeout(() => messageInputRef.current?.focus(), 0); // select the message input once the message as loaded
     }
   };
-  
 
   const onUserMsgToggle = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     const { selectionStart, selectionEnd } = event.currentTarget;
@@ -281,9 +288,11 @@ export function ChatRoute() {
     <>
       <Container pt="xl" pb={100}>
         <Stack spacing="xs">
-        {messages?.filter(message => !message.hidden).map((message) => (
-          <MessageItem key={message.id} message={message} />
-        ))}
+          {messages
+            ?.filter((message) => !message.hidden)
+            .map((message) => (
+              <MessageItem key={message.id} message={message} />
+            ))}
         </Stack>
         {submitting && (
           <Card withBorder mt="xs">
@@ -307,7 +316,7 @@ export function ChatRoute() {
               : theme.colors.gray[0],
         })}
       >
-        {messages?.length === 0 &&
+        {messages?.length === 0 && (
           <Group position="center" my={40}>
             <SegmentedControl
               value={model}
@@ -315,14 +324,14 @@ export function ChatRoute() {
               size="md"
               sx={(theme) => ({
                 [`@media (min-width: ${theme.breakpoints.md})`]: {
-                  width: '30%',
+                  width: "30%",
                 },
               })}
               data={[
-                { label: 'GPT-3.5', value: 'gpt-3.5-turbo' },
-                { label: 'GPT-4', value: 'gpt-4-1106-preview' }
+                { label: "GPT-3.5", value: "gpt-3.5-turbo" },
+                { label: "GPT-4", value: "gpt-4-1106-preview" },
               ]}
-              onChange={async (value: 'gpt-3.5-turbo' | 'gpt-4') => {
+              onChange={async (value: "gpt-3.5-turbo" | "gpt-4") => {
                 const model = value;
                 try {
                   await db.settings.update("general", {
@@ -352,7 +361,7 @@ export function ChatRoute() {
               }}
             />
           </Group>
-        }
+        )}
         <Container>
           {messages?.length === 0 && (
             <SimpleGrid
