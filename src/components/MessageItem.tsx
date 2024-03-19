@@ -61,7 +61,7 @@ export const MessageItem = memo(({ message }: { message: Message }) => {
                   );
                 },
               }}
-            >
+          >
               {message.content}
             </ReactMarkdown>
             {message.role === 'assistant' && (

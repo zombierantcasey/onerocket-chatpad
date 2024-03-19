@@ -16,6 +16,16 @@ Ensure both npm and yarn are installed.
 yarn build
 ```
 
+## Re-deploy existing docker container 
+
+If you're updating an existing docker container, use the dockerredpeploy.sh script: 
+
+```
+sudo ./dockerredeploy.sh
+```
+
+Otherwise:
+
 ## Build docker locally 
 
 ```
