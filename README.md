@@ -16,14 +16,6 @@ Ensure both npm and yarn are installed.
 yarn build
 ```
 
-## Docker compose
-
-```
-sudo docker compose up -d
-```
-
-Otherwise:
-
 ## Build docker locally 
 
 ```
@@ -48,6 +40,4 @@ If you're updating an existing docker container, use the dockerredpeploy.sh scri
 
 ```
 sudo ./dockerredeploy.sh
-```
-
 ```

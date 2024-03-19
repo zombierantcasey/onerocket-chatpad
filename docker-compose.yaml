@@ -1,9 +1,0 @@
-version: '3.9'
-services:
-  chatpad:
-    build: .
-    image: or-chatpad:latest
-    container_name: chatpad
-    ports:
-      - 8080:80
-    restart: always
