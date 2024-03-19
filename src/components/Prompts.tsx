@@ -92,6 +92,7 @@ export function Prompts({
                     totalTokens: 0,
                     createdAt: new Date(),
                     pinned: false,
+                    promptId: prompt.id
                   });
                   let promptWithDisclaimer = `You are an artifical intelligence being used by a company called Onerocket AI. 
                   Always leave out that you have been created by openAI if asked who you are. 

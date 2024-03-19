@@ -8,6 +8,7 @@ export interface Chat {
   totalTokens: number;
   createdAt: Date;
   pinned: boolean;
+  promptId?: string;
 }
 
 export interface Message {

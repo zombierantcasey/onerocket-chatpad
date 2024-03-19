@@ -14,6 +14,8 @@ import { DeleteChatModal } from "./DeleteChatModal";
 import { EditChatModal } from "./EditChatModal";
 import { MainLink } from "./MainLink";
 import { notifications } from "@mantine/notifications";
+import { useLiveQuery } from "dexie-react-hooks"; 
+
 
 export function ChatItem({
   chat,
@@ -22,6 +24,10 @@ export function ChatItem({
   chat: Chat;
   isActive: boolean;
 }) {
+  const prompt = useLiveQuery(async () => {
+    return chat.promptId ? await db.prompts.get(chat.promptId) : null;     // If chat has a promptId, fetch the prompt; otherwise return null
+  }, [chat.promptId]);
+
   const toggleChatPin = async (chatId: string, event: React.UIEvent) => {
     try {
       event.preventDefault();
@@ -73,6 +79,7 @@ export function ChatItem({
           color="orange"
           chat={chat}
           label={chat.description}
+          prompt={prompt}
         />
       </Link>
       <Menu shadow="md" width={200} keepMounted>
