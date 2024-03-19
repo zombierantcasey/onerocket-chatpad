@@ -3,7 +3,7 @@ services:
   chatpad:
     build: .
     image: or-chatpad:latest
-    container_name: AGI-Chat
+    container_name: chatpad
     ports:
       - 8080:80
     restart: always
