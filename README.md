@@ -16,12 +16,10 @@ Ensure both npm and yarn are installed.
 yarn build
 ```
 
-## Re-deploy existing docker container 
-
-If you're updating an existing docker container, use the dockerredpeploy.sh script: 
+## Docker compose
 
 ```
-sudo ./dockerredeploy.sh
+sudo docker compose up -d
 ```
 
 Otherwise:
@@ -42,4 +40,14 @@ sudo docker run --name chatpad -d -p 8080:80 or-chatpad
 
 ```
 docker start chatpad
+```
+
+## Re-deploy existing docker container 
+
+If you're updating an existing docker container, use the dockerredpeploy.sh script: 
+
+```
+sudo ./dockerredeploy.sh
+```
+
 ```

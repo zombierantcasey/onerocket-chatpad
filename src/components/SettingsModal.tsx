@@ -29,7 +29,8 @@ export function SettingsModal({ children }: { children: ReactElement }) {
   const [auth, setAuth] = useState(config.defaultAuth);
   const [base, setBase] = useState("");
   const [version, setVersion] = useState("");
-  const [provider, setProvider] = useState('openai'); // default value can be 'openai' or 'onerocket.ai'
+  const [provider, setProvider] = useState("openai"); // default value can be 'openai' or 'onerocket.ai'
+  const packageJson = require("../../package.json");
 
   const settings = useLiveQuery(async () => {
     return db.settings.where({ id: "general" }).first();
@@ -64,15 +65,18 @@ export function SettingsModal({ children }: { children: ReactElement }) {
       {cloneElement(children, { onClick: open })}
       <Modal opened={opened} onClose={close} title="Settings" size="lg">
         <Stack>
+          <Text size="sm" color="dimmed">
+            Application Version: {packageJson.version}
+          </Text>
           <Select
-              label="Provider"
-              value={provider}
-              onChange={(value) => setProvider(value)}
-              data={[
-                { value: 'openai', label: 'OpenAI' },
-                { value: 'onerocket.ai', label: 'Onerocket.ai' },
-              ]}
-              mb="md"
+            label="Provider"
+            value={provider}
+            onChange={(value) => setProvider(value)}
+            data={[
+              { value: "openai", label: "OpenAI" },
+              { value: "onerocket.ai", label: "Onerocket.ai" },
+            ]}
+            mb="md"
           />
           <form
             onSubmit={async (event) => {
@@ -148,7 +152,7 @@ export function SettingsModal({ children }: { children: ReactElement }) {
               setSubmitting(true);
               try {
                 await db.settings.update("general", {
-                  openAiApiType: value ?? 'openai',
+                  openAiApiType: value ?? "openai",
                 });
                 notifications.show({
                   title: "Saved",
@@ -175,7 +179,10 @@ export function SettingsModal({ children }: { children: ReactElement }) {
               }
             }}
             withinPortal
-            data={[{ "value": "openai", "label": "OpenAI"}, { "value": "custom", "label": "Custom (e.g. Azure OpenAI)"}]}
+            data={[
+              { value: "openai", label: "OpenAI" },
+              { value: "custom", label: "Custom (e.g. Azure OpenAI)" },
+            ]}
           />
           <Select
             label="OpenAI Model (OpenAI Only)"
@@ -224,7 +231,7 @@ export function SettingsModal({ children }: { children: ReactElement }) {
               setSubmitting(true);
               try {
                 await db.settings.update("general", {
-                  openAiApiAuth: value ?? 'none',
+                  openAiApiAuth: value ?? "none",
                 });
                 notifications.show({
                   title: "Saved",
@@ -251,7 +258,11 @@ export function SettingsModal({ children }: { children: ReactElement }) {
               }
             }}
             withinPortal
-            data={[{ "value": "none", "label": "None"}, { "value": "bearer-token", "label": "Bearer Token"}, { "value": "api-key", "label": "API Key"}]}
+            data={[
+              { value: "none", label: "None" },
+              { value: "bearer-token", label: "Bearer Token" },
+              { value: "api-key", label: "API Key" },
+            ]}
           />
           <form
             onSubmit={async (event) => {
