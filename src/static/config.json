@@ -1,5 +1,5 @@
 {
-    "defaultModel": "gpt-4-1106-preview",
+    "defaultModel": "gpt-4o",
     "defaultType": "openai",
     "defaultAuth": "api-key",
     "defaultBase": "",
@@ -35,8 +35,12 @@
         "label": "GPT-4-32K-0314"
       },
       {
-        "value": "gpt-4-1106-preview",
-        "label": "GPT-4-1106-Preview (Default ChatGPT)"
+        "value": "gpt-4-turbo",
+        "label": "gpt-4-turbo"
+      }, 
+      {
+        "value": "gpt-4o",
+        "label": "gpt-4o"
       }
     ],
     "writingCharacters": [
