@@ -1,12 +1,12 @@
 {
   "name": "chatpad",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "private": true,
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "parcel",
-    "build": "parcel build"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "staticFiles": {
     "staticPath": "src/static"
@@ -15,11 +15,9 @@
     "@parcel/transformer-sass": "^2.8.3",
     "@types/downloadjs": "^1.4.3",
     "@types/lodash": "^4.14.191",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
     "@types/react-window": "^1.8.8",
     "buffer": "^5.7.1",
-    "parcel": "^2.8.3",
+    "parcel": "^2.12.0",
     "parcel-reporter-static-files-copy": "^1.5.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10"
@@ -35,8 +33,8 @@
     "@tabler/icons-react": "^2.9.0",
     "@tanstack/react-location": "^3.7.4",
     "@types/node": "18.15.0",
-    "@types/react": "18.0.28",
-    "@types/react-dom": "18.0.11",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "dexie": "^3.2.3",
     "dexie-export-import": "^4.0.6",
     "dexie-react-hooks": "^1.1.3",
@@ -57,6 +55,6 @@
     "react-markdown": "^8.0.6",
     "react-window": "^1.8.10",
     "remark-gfm": "^3.0.1",
-    "typescript": "4.9.5"
+    "typescript": "^5.4.5"
   }
 }
